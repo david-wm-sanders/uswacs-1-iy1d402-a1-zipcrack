@@ -2,9 +2,6 @@ import sys
 import zipfile
 from pathlib import Path
 
-wrd_fp = Path(__file__).parent / Path("dictionary.txt")
-zip_fp = Path(__file__).parent / Path("locked.zip")
-
 
 def read_word_list(wrd_fp):
     pws = []
@@ -27,6 +24,14 @@ def crack_zip(zip_fp, word_list):
 
 
 if __name__ == '__main__':
+    try:
+        zip_arg = sys.argv[1]
+        wrd_arg = sys.argv[2]
+    except IndexError:
+        print("Usage: zipcrack.py ZIPFILE WORDLIST")
+        sys.exit(1)
+    zip_fp = Path(__file__).parent / f"{zip_arg}"
+    wrd_fp = Path(__file__).parent / f"{wrd_arg}"
     pws = read_word_list(wrd_fp)
-    print("Wordlist:", pws)
+    # print("Wordlist:", pws)
     crack_zip(zip_fp, pws)
